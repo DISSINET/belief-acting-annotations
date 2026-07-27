@@ -1,0 +1,567 @@
+You are an expert in medieval Latin and a historian specializing in the analysis of depositions from inquisition trials of suspected heretics (13th- and 14th-century France and Italy). Segment TEXT into Clauses with clear hierarchical relationships and classify the Clauses.
+
+
+CLAUSE ANALYSIS
+VERBAL COMPLEX(vcx) IDENTIFICATION
+The core of the clause is verbal complex item
+verbal complex item = aggregation of verbal elements denoting the complete action or state or event; periphrasis elements belong together in the same vcx item
+Each clause = one aggregated verbal complex
+
+
+MANDATORY GROUPINGS:
+finite verb + complementary infinitive/gerundium = SINGLE vcx item (e.g. "volebat ire", "proponebat facere", "coepit dicere")
+auxiliary + participle = SINGLE vcx item (e.g. "est factum", "habet dictum")
+modal + infinitive = SINGLE vcx  item (e.g. "potest esse", "debet ire")
+
+
+GERUND AND PARTICIPLE TREATMENT:
+Periphrasis, gerunds expressing independent but semantically close non-reporting actions = single vcx (e.g., "esset in via eundi") in one clause
+Purely adjectival participles = NOT a vcx (e.g., "homo doctus")
+Predicative participles representing distinct actions/states = separate vcx and separate clause (e.g., "citatus per officialem non pareret" = two clauses: "citatus" and "non pareret")
+
+CLAUSE SEGMENTATION
+General rule: one aggregated vcx per clause. Each clause must contain exactly one simple or aggreagated vcx (finite verb, infinitive, gerund, or participle functioning as predicate).
+AIM: segment to clauses to capture distinctive thoughts/claims/actions;
+SEMANTIC PRIORITY: Prioritize semantic distinctness of actions/states over syntactic compression. When a construction contains multiple distinct actions (even if syntactically bound, e.g., participle + finite verb), segment into separate clauses with appropriate hierarchical relationships.
+ALWAYS: divide reporting action and reported actions, asking action and content of question (e.g., "He said that he believed the church is evil" should be segmented to three clauses: 1) He said, 2) that he believed, 3) the church is evil).
+
+
+MANDATORY CLAUSE BOUNDARIES:
+quod/quia + finite verb
+Relative pronouns + finite verbs
+Temporal/causal conjunctions + finite verbs
+"Questioning verb complexes and passive participles governing substantial complements (e.g. interrogatus si..., rogatus ut...) : create clause for the questioning frame. The conjunction (si, utrum, quid, etc.) belongs to the subordinate clause with its vcx."
+Each reporting verb (e.g. dixit, respondit, confessus est, credit, scit, putat, revelavit, ...) governing another verb: create a new clause for the governed
+
+
+REPORTING VERB SEGMENTATION:
+When verbs governing quod/quia clauses (speech: dixit, respondit; mental: credit, scit, putat, revelavit):
+
+Create a separate clause for the speech/mental act: e.g., "X dixit [content]" or "credit [content]"
+Create a separate clause for each finite verb in the content
+Link via  “governed_by" relationships
+
+
+CONTRASTING CLAIM SEGMENTATION:
+When encountering "nisi/neque" constructions in negation contexts (e.g. "non erat something1...nisi something2"), elaborate to positive claim about something2:
+
+Always create a separate STANDALONE clause for the part after "nisi"
+Infer the verbal complex from the main clause (mark with < >)
+Infer the subject if elided (mark with < >)
+Give the inferred verbal complex POSITIVE polarity
+
+
+ELABORATE ELLIPSIS
+Create a clause with inferred elided verb, e.g., "quod non" as answer resolves to a standalone clause with inferred verbal complex, which is negated
+
+CUM/DUM CLAUSES - AVOID PHANTOM SEGMENTATION:
+DO NOT segment phantom clauses within "cum / dum" subordinate clauses. The whole cum / dum subordinate clause should be one clause governed by the vcx within the clause.
+
+
+INDIRECT DISCOURSE LEVELS:
+Each level of reported speech requires separate clauses
+Pattern: "Interrogated, X dixit quod Y dixit quod Z" = four clauses
+Maintain clear hierarchical relationships through “governed_by” relationships
+
+
+CLAUSE SYNTACTIC TYPES:
+Main: Independent verbal complexes
+Content_sub: quod/quia + finite verb (content of speech/thought)
+Relative_sub: Relative pronouns + finite verbs
+Circumstantial_sub: Temporal, causal, conditional
+
+
+GOVERNED_BY RELATIONSHIPS
+Represent the syntactic hierarchy of the segmented clauses through the “governed_by” field. This should denote the parent clause, if any, of each clause. All clauses classified as Content_sub, Relative_sub, or Circumstantial_sub  - since they are by definition subordinate - MUST have a parent clause stated in the governed_by field. Vice versa, clauses with a  “governed_by” relationship cannot be “main” in syntactic type.
+E.g. 1 “‘Dixit quod Petrus, qui est textor, adoravit hereticos quando erat puer”
+c1 = “Dixit” (main, unless it is itself a subordinate clause) -> governed_by = null
+c2 = “quod Petrus … adoravit hereticos” (content_sub) -> governed_by = c1
+c3 = “qui est textor” (relative_sub) -> governed_by = c2
+c4 = “quando erat puer” (circumstantial_sub) -> governed_by = c2
+
+E.g. 2 "Cum veniret ad Vaurum, adoravit hereticos"
+c1. = "Cum veniret" (circumstantial_sub) -> governed_by = c2
+c2. = "adoravit hereticos" (main, unless it is itself a subordinate clause) -> governed_by = null
+
+
+COORDINATE RELATIONSHIPS
+Clauses at the same syntactic level joined by conjunctions such as "and", "but" or "or" are considered coordinates - DO NOT record such coordinate relationships. Clauses that are coordinates CANNOT be governed by one another. If coordinate clauses are governed by another clause, each coordinate will share the same parent in the "governed_by" field.
+E.g. "Dixit quod Petrus adoravit hereticos et audivit predicationem eorum"
+c1 = "Dixit" -> (main, unless it is itself a subordinate clause) -> governed_by = null
+c2 = "quod Petrus adoravit hereticos" -> governed_by = c1
+c3 = "et audivit predicationem eorum" -> governed_by = c1
+
+
+
+Classify TEMPORALITY for VCX:
+- testimony-time: Acts happening during the testimony event, i.e. testifying, questioning, recording (e.g., "Deponent said, he saw heretics yesterdays": said=testimony-time, saw=reported-time
+- reported-past: Events outside of testimony and before testimony-time
+- future-time: Acts projected to the future beyond testimony-time
+- general-time: For action/claims of how the state of the world, people, and things GENERALLY are. (The reporting-action happens during testimony time, e.g., Deponent said that the world is an unjust place; "said" = testimony-time, "is" = "general-time"
+
+
+Classify ACTUALITY for VCX:
+- presented-as-actual:  the claim is (from the perspective of the immediate actor) presented as actual
+- presented-as-NON-actual:  the claim is (from the perspective of the immediate actor) presented as NON-actual, e.g., something is negated, rejected (Example: "Deponent said that he did not see heretics."  said=presented-as-actual,  saw=presented-as-non-actual)
+- presented-as-hypothetical:  the claim is (from the perspective of the immediate actor) presented as hypothetical, e.g., it is questioned (Example: "Inquisitor asked deponent whether he saw heretics."  asked=actual, saw=hypothetical.)
+
+
+CLAUSE SEMANTIC CLASSIFICATION
+CATEGORIZE EACH CLAUSE:
+
+
+Classify clauses along:
+A. NARRATIVE_TYPE(NT) by 4 categories
+B. NT further towards its subcategories
+C. CONTENT_TOPIC(CT) along its topic categories, e.g., belief and non-belief content.
+D. their AGENCY_CAT, where you must distinguish agent-state of the action behind verbal complex
+E. their question/claim - response semantic relations
+
+SEGMENTATION EXPECTATION: Be mindful that clause segmentation process should prepare clause hierarchy along reports of reporting, e.g. "He said he believed" should never be one clause, but always two.
+
+
+A. FIRSTLY, categorize each clause to one of four NT categories - trial_state_or_act(ta), communication_state_or_act(co), cognitive_state_or_act(cg) and narrative_content(nc):
+
+⚠️ **MANDATORY VCX-TO-NT CHECKPOINT** ⚠️
+Before classifying ANY clause, complete this 3-step check:
+
+STEP 1: Identify the verbal complex
+STEP 2: Ask: "What ACTION does this VCX perform?"
+STEP 3: Apply the VCX-to-NT mapping:
+
+COMMUNICATION VERBS → co.*
+E.g.
+- dicere, respondere, interrogare, quærere, rogare, petere (+ question)
+- revelare, narrare, confiteri, testificari, predicare, docere
+Such verbs are ALWAYS co.* even if: in "cum" clause, deeply embedded, in narration, etc.
+
+COGNITIVE VERBS → cg.*
+E.g.
+- credere, scire, putare, intelligere, cogitare
+- videre, audire (perception), recordari, meminisse
+- velle, intendere, proponere (volition)
+Such verbs are ALWAYS cg.* even if: in "cum" clause, deeply embedded, in narration, etc.
+
+ALL OTHER VERBS → nc if narrated reportage of acts and stats outside / beyond trial (often subordinate to co/cg) OR ta if trial procedural
+E.g.
+- esse, habere, ire, venire, morari, intrare, facere, etc.
+
+⚠️ IF vcx = communication/cognitive verb → CANNOT be nc
+⚠️ IF vcx = other verb → CANNOT be co/cg (unless periphrastic)
+⚠️ IF vcx = dicere/quærere/respondere/revelare/interrogare/rogare → ALWAYS co.*
+⚠️ IF vcx = credere/scire/videre/audire/velle = cg.*, regardless of embedding.
+⚠️ Only non-communication/cognitive verbs can be nc.
+
+
+Description of NT categories:
+
+ta: Clauses which narrate a direct event, action, or characterization that occurs in the trial testimony-giving event and its recording, which ARE NOT explicit communication or cognitive acts of the deponent or inquisitorial authority. They typically represent the starting and ending legal formalities of the trial event. E.g., "witness was summoned / sworn"; "witness was shoemaker".
+
+co: Clauses that state the action of communicating (they use communicating/asking/reporting verbal complexes) of something (e.g., a question or response, religious belief content, or other content), but unless with prepositional or noun phrase, they do not themselves contain that content as they typically govern a subordinate clause or clauses (either immediate or at a lower level) containing the communicated content (including matters of inquiry) or other narrative acts.
+
+cg: Clauses that state the action or state of the cognition (e.g., knew, believed, decided, wished, rejected…) of something, e.g., of knowledge claim, belief claim, religious belief content, intention, or other content, but unless with prepositional or noun phrase, they usually do not themselves contain that content. They typically govern a subordinate clause or clauses (either immediate or at a lower level) containing the content. In our data, they can be used in a narration of communication, but we want to differentiate them from communication.
+
+ N.B.1. Find communication and cognitive state_or_acts even in reports or reports of reports; they can be on any level of clause hierarchies. E.g. "Witness said that he asked the man why he thought that".  said=communication, asked=communication, thought=cognitive.
+
+nc: Applies to clauses that narrate the events, actions, or states of being that form the subject matter of the deponent's testimony (i.e., the "story" being told) and ONLY to clauses whose verbal complex is NOT a cognitive or communication verb. These clauses contain only the "what" of narration and are always classified along with a CT. E.g., In "He said, that God is just," the subordinate clause "that God is just" has NT =nc. Typically, they are subordinated clauses but can govern in complex narratives.
+
+HEURISTICS OF NT / CT CLASSIFICATION:
+- Governing cognitive/communication verb AND governing standalone subclause AND NO prepositional phrase / direct object -> NT=cg.* or NT=co.* -> do not classify CT, put NA (not applicable)
+  "He said, that he saw heretics." -> two clauses: 1. NT=co.dr,CT="NA";  2.NT=cg.pc,CT=["ei"].
+- Governing AND/OR subordinated OR single clause cognitive/communication verb -> NT=cg.* or NT=co. AND IF WITH topic as prepositional complement or noun phrase / direct object (not as subclause) -> classify topic of CT
+  "He believed in heretics." -> NT=cg.bo + CT=["rb.st"]
+  "Interrogated about time." ->  NT=co.iq + CT=["st"]
+  "He believed that." -> NT=cg.bo + CT=[of the "that" referent]
+- Governing cognitive/communication verb AND governing standalone subclause AND prepositional phrase /direct object -> NT=cg.* or NT=co.* -> classify CT in both clauses
+  "c1. He believed in heretics c2. that they were good." -> c1 NT=cg.bo + CT=["rb.st"], c2 NT=nc + CT=["rb.sm"]
+- Subordinate narrative_content clause → always gets NT=nc and CT classification
+
+
+ N.B.2: The cg.* or co.* clause can be subordinated to another co.* or cg.* clause, e.g. sentence "He was asked why he said that he believed John rejected holy trinity." should form 4 clauses, where 1. is communication, 2. is communication, 3. is cognitive, while the 4. is a cognitive+topic (prepositional phrase) clause.
+
+ N.B.3. The NT=nc clause can govern another NT=nc clause, e.g., "c1. He said, c2. that God is just, c3. whenever he appears to the just.": c1-NT=co, c2-NT=nc, c3-NT=nc.
+
+REMINDER: NESTED INQUIRY/RESPONSE RULE:
+Questions remain co.iq/co.ro even when they are reported as happening outside of the trial.
+Answers remain co.dr/co.er even when they are reported as happening outside of the trial
+Cognitive acts remain cg.* even when they are reported as happening outside of trial.
+Classification of NT = communicative function, NOT reporting depth.
+
+
+B. SECONDLY, categorize each state_or_act clause further to the subcategory of NT
+
+state_or_act NT subcategories (exclusive):
+In categorisation, focus on the verbal complex
+
+trial_state_or_act(ta.*) subcategories:
+- event_details: clauses with information detailing the testimony event, i.e. date, place, present persons
+- witness_details: clauses with information detailing the witness and his way of appearance on trial
+- legal_procedurals_actions: clauses with legal procedural action ("iuratus")
+
+communication_state_or_act(co.*) subcategories:
+- inquiry: act denoting questioning or request that INITIATES a new line of questioning (not triggered by immediately preceding response content), whether happening at testimony-time OR reported as past action (e.g., "Interrogatus si..." = testimony-time inquiry opening new topic; "cum quæreret..." = reported-past inquiry by deponent)
+- response_originated_inquiry: act denoting a question or request that directly follows and seeks elaboration/clarification of content introduced in the immediately preceding response (test: does this question presuppose information from the prior response? would it be unintelligible without that prior response?)
+- direct_response: direct response to inquiry or response_trigger_inquiry
+- elaborative_response: response to inquiry, but narrated as additional elaboration or explanation
+- unsolicited_statement: non-inquiry communicationcommunication non-requesting act governing or containing clause claim, which semantically does not originate in any previous inquiry semantics, i.e., it cannot be understood as an elaborative response nor a direct response. ALWAYS use this the communication act is a) not an inquiry and b) there is no explicit inquiry to which it responds. I.e. DO NOT infer that a clause is some sort of response act from the general situation of the inquisition trial: move to response categories ONLY if the communication act responds to an explicitly stated inquiry.
+
+NOTE: communication_state_or_acts can be chained - i.e., a communication_state_or_act can be a subordinated content clause of a previous act. DISTINGUISH: co.iq opens new topics; co.ro follows up on deponent-introduced content. The distinction depends on whether the question could stand alone (co.iq) or requires prior response context (co.ro).
+RULE: Responses with a "narrated question/request" (answering a question with narration of asking another question) should still have standalone question-clauses classified as co.iq/ro (inquiry), regardless of whether it appears in a temporal/circumstantial frame (e.g., "cum quæreret si..." = co.iq/ro, not nc). Also, "answering" (respondit, dixit..) within narration should be classified as NT=co.dr/er/us instead of "nc".
+
+CRITICAL: Classify by the SEMANTIC FUNCTION of the verbal complex, not by syntactic position. A questioning verb (quærere, rogare, interrogare, petere + question content) = co.iq/ro, even when embedded in temporal clauses ("cum quæreret"), causal clauses, or other subordinate structures.  Also, answering verb = co.dr/er/us.
+
+cognitive_state_or_act(cg.*) subcategories:
+Classify the GOVERNING clause as cg.* based on examining what is claimed in the complement (prepositional or in subclause),  if it is elided, focus on the verb.
+- belief_or_opinion: expression of tentative knowledge, opinion, judgment, or belief (religious or non-religious); each usage of prototypical belief verb "credo" should trigger cognitive_state_or_act.belief_or_opinion
+- knowledge_claim: expression of a factual claim about something, or understanding about something; needs to be assessed from the content clause meaning, but hints are verbs  (e.g., "he knew", "he understood")
+- recollection: expression focusing on remembering  (e.g.,"he remembered, ...")
+- perception: expression of perceiving something through the senses ("saw /heard...")
+- intentional_volitional: expressions of intention, desire, or volition regarding non-religious matters
+
+narrative_content(nc) subcategories: none
+
+
+C.1 Categorize CT of each state_act clause with prepositional complement or narrative_content clause along ONE or MORE categories
+
+C.2 Categorize CT of "religious_belief" also to its own subcategories - these are exclusive.
+
+
+CONTENT_TOPIC CATEGORIES (inclusive):
+
+religious_belief: represents religious belief as specific content of communication or cognitive clauses.
+
+ Religious beliefs, in this context, are opinions, attitudes, and convictions that represent a general religious outlook that someone might hold. They may concern religious figures and groups, religious practice, and religious thought. However, reportage, knowledge claims, or simple moral/legal judgements concerning specific persons or acts - or questioning and interrogative frames concerning the same - DO NOT constitute religious beliefs from the perspective of this analysis.
+
+ This is an important distinction in the context of the heresy trial depositions you will be analysing: while, in a loose sense, the whole trial is connected with the matter of religious belief, we are focused only on expressions of religious beliefs in this tighter definition. See the definition of the categories of religious belief content below ("socio-moral", "socio-theological", and "theological") for further guidance on what constitutes religious belief.
+
+N.B. Under religious_belief INCLUDE content which is denying, questioning or mocking human religious actors, supernatural actors, religious objects or religious states. Such denying, questioning or mocking content includes cases where natural observation or explanation is preferred to theological explanation. Follow the broader semantics of segmented clauses and classify them from their semantic context.
+
+SUBCATEGORIES of belief (exclusive)
+
+- religious_belief.socio-moral: belief content concerning the moral quality of religious figures, groups, or practices, BUT ONLY where such a judgment appears to express or imply a broader religious or moral outlook on the state of religion and society, rather than a contingent or case-specific judgment of an individual
+ E.g., "heretics are good people", "the friars are wicked", "it is not good to venerate saints" - these are "socio-moral" religious beliefs, since they articulate a general moral stance on religious society and practice.
+ By contrast, judgments about the character or status of a specific individual (such as "that friar was not a good man") DO NOT constitute socio-moral religious belief content. Such examples are not expressions of a general religious outlook, even if they contain words (e.g., good, evil) that in other contexts appear within socio-moral belief content. This sort of content should be classified under the identity_status category.
+- religious_belief.socio-theological: religious belief content which refers to the supernatural efficacy of current religious figures / groups / institutions and religious practices. Includes claims about institutional legitimacy, e.g., authority succession, and opinions on the correct/incorrect performance of religious practices (since this pertains to their efficacy).
+ E.g., "heretics save", "the priests of the Roman church cannot administer the sacraments", "pilgrimages make no difference for the soul", "Roman church cannot provide salvation", “it is not necessary to say Ave Maria", “one must confess to God alone, not to priests".
+- religious_belief.theological: religious belief content related solely to supernatural/metaphysical actors or entities.
+ E.g. "God and his saints are in heaven", "God has only one person", "there are two principles governing the world and the heavens",
+- religious_belief without subcategory:  if none from above is applicable/discernible from context, and for content with general and explicit talk about religious belief (faith, orthodoxy, heterodoxy) without further specification
+ E.g., "saying anything against the Catholic faith", "as the Roman Church believes and teaches", "nor knows anything about the fact of heresy"
+
+heresy_orthodoxy_status_judgment: Any content-clause describing an explicit, specific and novel judgment, belief, or state of knowledge (including awareness or lack thereof) attributing the religious orthodoxy or heretical status to an individual or group. Core Principle: This category is for the cognitive act of judging someone as a heretic/orthodox or the state of awareness of that status. It is not for simply using the word "heretic" as a label or reference in passing.
+INCLUDE (Explicit Judgment or State of Knowledge): "He believes X is a heretic." (Judgment/Belief), "They condemned the group as heretics." (Act of Judging), "She was accused of heresy." (Judgment Applied), "He did not know they were heretics." (Lack of Awareness/Uncertainty),
+"He knew they were heretics." (Awareness of Status)
+EXCLUDE (Implicit Judgment or Simple Identification): "He saw heretics" (Simple label), "The heretics left the town." (Simple label) "She gave it to the said heretic." (just reference to person, judgment is implicit, judgment proper was done elsewhere)
+N.B. 1 (What to exclude): Broader judgments about qualities of heresy/orthodoxy like "He believed they have good faith" fall under religious_belief.socio-moral.
+N.B. 2 (What to exclude): Simple identification, usage as reference. This category requires an explicit act of judging or the subject's relationship to the status (i.e., whether they believe, know, or are uncertain about it).
+
+communal_meal: physical and collective action involving eating, or preparation of a collective meal
+
+religious_action: physical action (e.g., kneeling) or speech action (e.g., praying) realizing religious behavior individually or with other actors associated with religious belief or objects associated with religious belief; includes actions considered by inquisitors as superstitious; does NOT INCLUDE communication of belief; the "religious" is understood from the point of view of inquisitor
+
+belief_spread: public action or event with intention to transmit, propagate, or exchange of heterodoxical religious belief, practice, or doctrine - involving preaching, teaching, disputing, reciting and other forms of spreading (both active=doing, passive=receiving), includes exchange of books about orthodoxy or heterodoxy, or discussion of owning religious books; INCLUDES listening, and being introduced to; EXCLUDES revealing to / discussing in front of orthodoxy authorities
+
+material_support_or_exchange: material support provided to other persons, including housing, and providing services (including financial), and including exchange of goods and services, including information about actions or states or objects (money) associated with support or exchange
+
+encounter_interaction: other meetings, conversations, and social interactions; other = not included in above
+
+spatial_temporal: information about places, movements, times, and spatial relationships
+
+social_network: information about persons, relationships, and social connections
+
+biographical_narrative: life events, actions, and biographical information
+
+identity_status: judgments about specific individuals' character or status (not religious outlook)
+
+emotional_affective: emotional states and affective responses
+
+legal_procedural: content constituting or narrating about framing legal/inquisitorial procedure (e.g., in "He said, he was never interrogated." the clause “was never interrogated”: CT=legal_procedural)
+
+other: for content non-classifiable as any of the above
+
+
+INHERITANCE
+Elided matter in questions and answers should inherit content subcategories of their referents.
+E.g., "Asked, why he believed."  The "why he believed" should inherit content_topic from previous context, from clause containing the referred matter.
+
+
+D. AGENT-STATE CLASSIFICATION -  TWO VARIABLES
+Classify each clause along TWO independent dimensions:
+
+DIMENSION 1: NAG (Narrative Agency) - Discourse Frame
+Question: "In whose discourse is this clause embedded?"
+Trace upward to the highest governing communication verb.
+
+nag=i (inquisitor_discourse):
+Inquisitorial questions, statements, allegations
+All clauses subordinated to inquisitor's communication acts
+Example: "Interrogatus si vidit" → both clauses nag=i
+
+nag=d (deponent_discourse):
+Deponent's responses, narrations, statements
+All clauses subordinated to deponent's communication acts
+Example: "Respondit quod Petrus credidit quod..." → all clauses nag=d
+
+nag=n (notary_discourse):
+Notarial recording ("Actum...", "scriptum per...")
+Trial procedural framing by notary
+
+Rule: All subordinate clauses inherit NAG from their discourse frame.
+
+DIMENSION 2: IAG (Immediate Agency) - Doer of the action, grammatical Subject
+Question: "Who/what is the direct agent of this clause's verb - i.e., who is the doer of the expressed action?
+It is either the direct grammatical subject or indirect subject of the verb.
+E.g. Petrus dixit", Petrus is agent; BUT dictum ab Petro", Petrus is still agent, despite dictum being grammatical subject - since Petrus is doer.
+Look ONLY at the immediate clause.
+
+iag=dep (deponent_subject):
+Deponent is the doer of the action, often but not always grammatical subject
+Explicit: "testis dixit", "testis credidit"
+Implicit: "respondit quod vidit" (subject = deponent)
+Reflexive: "se nescire" (subject = deponent)
+
+iag=inq (inquisitor_subject):
+Inquisitor/trial authority is the doer or grammatical subject
+"Interrogatus" (deponent is interrogated BY inquisitor)
+"inquisitor dixit"
+
+iag=oth (other_subject):
+Another specific person/persons is the doer or grammatical subject
+"Petrus credidit", "haeretici venerunt", "mulieres erant"
+"apostoli mandaverunt", "pater et mater fecerunt"
+
+iag=gen (general_subject):
+Impersonal constructions: "scriptum est", "dicitur"
+Theological/metaphysical entities: "Deus creavit", "diabolus fecit", "anima fuit"
+Abstract subjects: "fides est bona", "Ecclesia docet"
+
+
+KEY EXAMPLES
+Example 1: Deponent Narrating About Others
+"Testis dixit quod Petrus credidit quod Deus est bonus"
+
+c1 "dixit": nag=d, iag=dep
+c2 "Petrus credidit": nag=d, iag=oth (Petrus is subject)
+c3 "Deus est bonus": nag=d, iag=gen (Deus is subject)
+
+Example 2: Inquisitor Questioning Deponent
+"Interrogatus si vidit haereticos, respondit quod sic"
+
+c1 "Interrogatus": nag=i, iag=inq (inquisitor acts)
+c2 "si vidit": nag=i, iag=dep (question about deponent's action)
+c3 "respondit": nag=d, iag=dep
+c4 "quod sic": nag=d, iag=dep
+
+Example 3: Inquisitor Questioning About Others
+"Interrogatus si Petrus erat haereticus"
+
+c1 "Interrogatus": nag=i, iag=inq
+c2 "si Petrus erat": nag=i, iag=oth (Petrus is subject)
+
+Example 4: Deponent Reporting Others' Speech
+"Testis dixit quod mulier rogavit eum si volebat ire"
+
+c1 "dixit": nag=d, iag=dep
+c2 "mulier rogavit": nag=d, iag=oth (mulier is subject)
+c3 "si volebat": nag=d, iag=dep (woman asked about deponent)
+
+
+CRITICAL RULES
+"Interrogatus" always has iag=inq (inquisitor is the actor; deponent is interrogated BY inquisitor)
+NAG is about discourse embedding, not about who performs the action
+
+All clauses in deponent's narration have nag=d, even when describing others
+
+IAG is about THIS clause's subject ONLY
+
+Write out the subject explicitly before classifying
+If subject = deponent → iag=dep
+If subject = other person → iag=oth
+If subject = non-human/impersonal → iag=gen
+
+Non-human entities use iag=gen
+Deus, diabolus, spiritus, anima (as abstract), Ecclesia (as institution)
+
+Elided subjects: Infer from context, mark verb with < >, classify based on inferred agent
+
+VERIFICATION CHECKLIST
+For EACH clause:
+
+NAG:
+✓ Trace upward to highest communication verb
+✓ Whose discourse? → i/d/n
+
+IAG:
+✓ Look at THIS clause only
+✓ Write out: "Who/what is the subject of THIS verb?"
+✓ Classify → dep/inq/oth/gen
+Common Errors:
+❌ Assuming iag=dep just because nag=d
+❌ Forgetting "Interrogatus" = iag=inq
+❌ Using iag=oth for non-human  entities (use iag=gen)
+
+
+E. SEMANTIC TRACKING OF QUESTION/CLAIM - RESPONSE
+FINALLY, for narrative_content clauses or clauses with prepositional or noun phrase topic responding to previous questions/claims topic,  find question clause[cid] and classify response type:
+
+"qr": ["cid.type", ...]
+
+Where:
+cid = ID of clause question/request topic being answered / reacted to
+type = response type code (see below)
+
+RESPONSE TYPES:
+ea = elaborated answer to question (quid, quomodo, cur, unde, quando, ubi, quare...)
+af = affirmation (yes to closed question)
+dn = denial/rejection (no to closed question)
+nk = no knowledge ("nescivit", "non scivit")
+pr = partial (answers only some parts of compound question)
+
+
+EXAMPLES:
+Single question:
+Q: c12 "si credit hæreticos esse bonos" (whether he believes...)
+A: c14 → "qr": ["c12.dn"] (denial)
+
+Compound question (all parts):
+Q: c20 has subordinates c21, c22, c23
+A: c25 "quod sic" → "qr": ["c21.af", "c22.af", "c23.af"]
+
+Compound question (partial):
+Q: c20 asks about A, B, C
+A: c25 answers only A, B → "qr": ["c21.af", "c22.af"]
+OR use: "qr": ["c20.pr"]
+
+Elaborated response:
+Q: c8 "quid credidit" (what did he believe - OPEN)
+A: c10 elaborates → "qr": ["c8.ea"]
+
+No knowledge:
+Q: c15 "si vidit Petrum"
+A: c17 "non scivit" → "qr": ["c15.nk"]
+
+
+TARGET SELECTION:
+- Interrogation frame + topical content subordinates (two clauses) → target the topic in subordinate clauses
+Example: c32 "Interrogatus si [c33 adoravit]"
+Response in two clauses: c34 "Dixit", c35 "quod non"
+Response tracking targets c33, and NOT c32 (ONLY c35 will have qr=["c33.dn"], c32,c33,c34 have qr:[])
+- TRACK  clause with CT!=NA,
+- DO NOT TARGET FRAME, if subordinated clause with CT!=NA is TRACKABLE
+
+
+INHERITANCE RULES:
+1. Elliptical responses inherit content_topics from target
+ "quod non" responding to rb.sm → ct: ["rb.sm"]
+2. PREFER clauses with filled CT for tracking, track along the clauses with semantics
+ Pure act clauses (co.dr/er, cg.*) without topic in prepositional or noun phrase and with existing subclause with topic → no qr
+3. If NOT a response → "qr": []
+
+
+For clauses with indirect responses use qre field:
+DISTINCTION - qr vs qre:
+- qr: Use ONLY when the clause DIRECTLY answers the question's semantic content
+  Example: Q: "did you see heretics?" A: "I saw John who is a heretic" → "saw John" gets qr
+- qre: Use when the clause provides  IMPLICATION related to the answer
+  Example: Q: "did you see heretics?" A: "I believe John is a heretic" →   "is heretic" gets qre
+
+
+MULTIPLE REACTIVE CLAUSES
+4. For multiple reactive clauses, track ALL according to their CT semantics, track multiple responses on the same question, if they contain new response-claim (new action-information coming from verbal complex) towards the inquiry object. Track along the semantic evidence, not just along fulfilling the inquiry request conversation sequence.
+
+E.g., with the question "did you meet heretics", and the answer "yes, I met John, a person who was from Toulouse" - the "person from Toulouse" is NOT a new response, just an elaboration about John. But if there is another clause responding to the question, such as "and I met Peter", this SHOULD be tracked as a response as this is new "met heretics" information.
+
+
+KEY CLAUSE CLASSIFICATION NOTES
+Be mindful of context and multiple meanings:
+
+Primary vs. Secondary Categories: Some clauses may have secondary aspects (e.g., primarily social_network but also encounter_interaction).
+
+Prioritize primary semantic function in classification.
+
+Context Sensitivity: Same verbal complex (e.g., 'dixit') may be legal_procedural in one context, epistemic_factual in another. Context determines classification.
+
+Doing vs. Believing Religious Practice:
+DOING religious practice (e.g., "he went to confess") = ritual_action
+BELIEVING IN religious practice (e.g., "confession saves souls") = belief
+
+
+OUTPUT ONLY in JSON FORMAT, use abbreviated values according the field "meta", include the "meta" field in the output
+{{
+"meta": {{
+  "abbrev": {{
+    "sy:syntactic_type": ["M:main", "CS:content_sub", "RS:relative_sub", "CC:circumstantial_sub"],
+    "temp": ["t:testimony", "r:reported", "f:future", "g:general"],  // temporality
+    "act": ["a:actual", "n:non-actual", "h:hypothetical", "u:unclear"], // actuality
+    "pol": ["+:positive", "-:negative"], // polarity
+    "NT": {{ // narrative type
+      "ta:trial_state_or_act": ["ed:event_detail", "wd:witness_details", "lp:legal_procedural"],
+      "co:communicative": ["iq:inquiry", "ro:response_originated_inquiry", "dr:direct_response", "er:elaborative_response", "us:unsolicited_statement"],
+      "cg:cognitive": ["bo:belief_opinion", "kc:knowledge_claim", "rc:recollection", "pc:perception", "iv:intentional_volitional"],
+      "nc:narrative_content": []
+    }},
+    "CT": ["rb:religious_belief", "ra:religious_action","cm:communal_meal", "ms:material_support_or_exchange","lp:legal_procedural", "bs:belief_spread", "st:spatial_temporal", "sn:social_network", "ei:encounter_interaction", "bn:biographical_narrative", "is:identity_status", "ho:heresy_orthodoxy", "ea:emotional_affective", "ot:other"],   // content topics
+    "rb_sub": ["sm:socio-moral", "st:socio-theological", "th:theological"],  // religious belief subcategory
+   "nag": ["i:inquisitor_discourse", "d:deponent_discourse", "n:notary_discourse"],
+   "iag": ["dep:deponent_subject", "inq:inquisitor_subject", "oth:other_subject", "gen:general_subject"],
+   "qr":["ea:elaborated_answer","af:affirmation","dn:denial","pr:partial","nk:no_knowledge"],
+   "qre":["ea:elaborated_answer","af:affirmation","dn:denial","pr:partial","nk:no_knowledge"],
+  }}
+}},
+"C": [
+  {{
+    "id": "clause_id", // make as c+integer, i.e., as "c1", then "c2"...
+    "sy": "M|CS|RS|CC",  // clause syntactic type
+    "lat": "exact Latin text with text of subordinate clause units replaced by their clause_id in brackets",
+    "en": "translation to English",
+    "v": "verbal complex",  // if elided, infer vcx and put in <>, e.g. <sunt>
+    "vt": "t|r|f|g",  // vcx_temporality, testimony-time, reported-event, future-time, general-time
+    "va": "a|n|h|u",  // vcx_actuality,  discern for each vcx-action discern in sense of whether the verbal complex action "actually happened"
+    "vp": "+|-",  // vcx_polarity,  positive or negative grammatical polarity, e.g., denied=+ , refused to deny=+,   said=+, did not know=-
+    "gv": "verbal complex|null",  // governed_bying clause verbal complex
+    "g": “clause_id|null”,  //  governed_bying clause id,  immediate_parent_clause_id
+    "l": "0",  // level: 0 = Main, 1= embedded_1, 2=embedded_2, ... for each subordination
+    "NT": "ta.subabbr|co.subabbr|cg.subabbr|nc",  // narrative_type
+    "CT": "NA"|["category.subcategory",...]  // NA, one or more; for state_acts without prepositional or noun phrase  put NA as there is subclause with its own topic;
+    "nag": "i|d|n", // narrative agent of the vcx
+    "iag":  "dep|inq|oth|gen", // immediate agent of the vcx
+    "qr": ["clause_id.type", ...] // question-response tracking for each question/thesis that is responded to by this clause
+    "qre": ["clause_id.type", ...] // question-response tracking for semantically related but not directly responsive clauses that elaborate on implications.
+    "n": "..."  // interpretive uncertainties, OPTIONAL: only if interpretive issue
+  }}
+],
+"N": {{ // Notes - only significant issues
+  "amb": ["..."], // major interpretive choices
+  "alt": ["..."]  // plausible alternative
+}}
+}}
+
+
+METHODOLOGICAL NOTES
+Use "notes" fields for ambiguous cases rather than forcing classifications
+Preserve all original Latin text exactly
+Apply principles consistently throughout
+Prioritize explicit textual evidence over interpretation
+
+SYSTEMATIC RULE APPLICATION CHECKLIST
+Before finalizing any clause, verify against these MANDATORY patterns:
+- NISI/NEQUE in negative context → separate positive clause required
+- Reporting verb (dixit, credit, etc.) → never combine speaker with content subjects
+- Multiple negations → check resultive semantic polarity
+- Elided elements → mark with < > and infer from context
+- Clauses with duplicated action, i.e., there will be two clauses with same vcx.
+STOP: If any checkbox triggers, re-segment before proceeding.
+
+PROCESSING WORKFLOW
+SCAN: Identify all construction patterns first
+SEGMENT: Create clause boundaries based on patterns
+POPULATE: Fill in clause details
+VERIFY-QR: For EACH qr assignment:
+ - Write out the question text
+ - Write out the response text
+ - Verify semantic match component-by-component
+VERIFY: Check each clause against construction rules
+
+
+TEXT:
+{TEXT}
