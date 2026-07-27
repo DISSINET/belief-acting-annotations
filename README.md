@@ -69,7 +69,7 @@ This dataset examines how religious belief was performed and constructed through
 ## Key Research Findings
 
 **Thematic saturation.** Material/social content and belief essentially
-never co-occur in the same clause (material support: OR = 0.00,
+never co-occur in the same deposition (material support: OR = 0.00,
 log-odds -8.09; spatio-temporal: OR = 0.03, log-odds -3.52). Belief has a
 rough fixed ceiling per deposition; other content is elastic and expands
 to fill whatever length a deposition has — converting to proportions
