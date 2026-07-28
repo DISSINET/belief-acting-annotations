@@ -4,46 +4,6 @@
 
 This repository contains research data and analysis outputs from a quantitative study of belief-acting performatives in medieval inquisition trial depositions. The dataset comprises 27,850 clauses extracted from 801 selected depositions across two historical inquisitorial registers — Toulouse and Bologna, 13th-14th century Southern France and Northern Italy — with Bologna's material analytically split into two sub-registers (ordinary proceedings and the Liber Securitatum campaign), for three register codes total.
 
-## Citation
-
-Cite **the paper** if you're referencing this study's findings, argument, or
-methodology. Also cite **the dataset** (separately, in addition to the
-paper) if you're reusing the data itself — for replication, a different
-analysis, or tooling built on top of it. If in doubt, cite both.
-
-### The paper
-
-Hampejs, Tomáš, Robert L.J. Shaw, and David Zbíral. "The Performance of Religious Belief in Medieval Inquisition Records: A Structural Analysis Using LLM Data Extraction and Multilevel Regression." In *Digital Humanities and Religions of the Past*, edited by František Válek. De Gruyter, forthcoming.
-
-```bibtex
-@incollection{hampejs2026belief,
-  author    = {Hampejs, Tom{\'a}{\v s} and Shaw, Robert L.J. and Zb{\'i}ral, David},
-  title     = {The Performance of Religious Belief in Medieval Inquisition Records: A Structural Analysis using {LLM} Data Extraction and Multilevel Regression},
-  booktitle = {Digital Humanities and Religions of the Past},
-  editor    = {V{\'a}lek, Franti{\v s}ek},
-  publisher = {De Gruyter},
-  year      = {2026},
-  note      = {Forthcoming}
-}
-```
-
-### The dataset
-
-Hampejs, Tomáš, Robert L.J. Shaw, and David Zbíral. *belief-acting-annotations:
-Clause-Level Annotations of Belief-Acting in Medieval Inquisition
-Depositions of Toulouse (1273-1282) and Bologna (1291-1310)* [Data set]. DISSINET, 2026. https://github.com/DISSINET/belief-acting-annotations
-
-```bibtex
-@misc{hampejs2026beliefactingannotations,
-  author    = {Hampejs, Tom{\'a}{\v s} and Shaw, Robert L.J. and Zb{\'i}ral, David},
-  title     = {belief-acting-annotations: Clause-Level Annotations of Belief-Acting in Medieval Inquisition Depositions of Toulouse (1273-1282) and Bologna (1291-1310)},
-  year      = {2026},
-  publisher = {DISSINET},
-  url       = {https://github.com/DISSINET/belief-acting-annotations},
-  note      = {Data set}
-}
-```
-
 ## Research Context
 
 This dataset examines how religious belief was performed and constructed through interrogative discourse in medieval inquisition trials. The analysis focuses on the procedural dynamics, thematic contexts, and sequential patterns of belief-acting performatives across different institutional settings.
@@ -60,53 +20,51 @@ This dataset examines how religious belief was performed and constructed through
 - _Toulouse register_: Biller, Peter, Caterina Bruschi, and Shelagh Sneddon, eds. Inquisitors and Heretics in Thirteenth-Century Languedoc: Edition and Translation of Toulouse Inquisition Depositions, 1273-1282. Brill, 2011.
 - _Bologna register_: Paolini, Lorenzo, and Raniero Orioli, eds. Acta S. Officii Bononie ab anno 1291 usque ad annum 1310. Vols 1–3. Fonti per la storia d’Italia 106. Istituto storico italiano per il Medio Evo, 1982. 
 
-
 **Total Observations:**
-- 27,850 clauses  (extracted data)
 - 801 depositions (input data)
-- 2 historical inquisitorial registers, 3 register codes (Bologna divided into two analytical sub-registers)
+- 27,850 clauses  (extracted data)
+
+## Corpus overview
+
+Corpus of 27,850 clauses across 801 depositions, broken down into six register-by-sex groups:
+
+| Group             | Register       | Sex | N depositions | N clauses | Median dep. length |
+| ----------------- | -------------- | --- | ------------- | --------- | ------------------ |
+| Toulouse female   | Toulouse       | f   | 35            | 1,962     | 47                 |
+| Toulouse male     | Toulouse       | m   | 157           | 10,164    | 44                 |
+| Bologna female    | Bologna non-LS | f   | 32            | 1,667     | 36.5               |
+| Bologna male      | Bologna non-LS | m   | 175           | 9,100     | 42                 |
+| Bologna LS female | Bologna LS     | f   | 249           | 2,399     | 9                  |
+| Bologna LS male   | Bologna LS     | m   | 153           | 2,558     | 12                 |
+
+For more see [[sembel_public_repo_v2/descriptive.figures.readme|descriptive.figures.readme]]
+
+## Belief Prevalence at a Glance
+
+Belief content is rare overall, and its subtype mix differs sharply by register.
+
+|                                                                      | Toulouse              | Bologna non-LS        | Bologna LS          | Corpus-wide           |
+| -------------------------------------------------------------------- | --------------------- | --------------------- | ------------------- | --------------------- |
+| Belief-tagged clauses                                                | 686/12,126 (5.7%)     | 997/10,767 (9.3%)     | 525/4,957 (10.6%)   | 2,208/27,850 (7.9%)   |
+| Zero-belief depositions                                              | 95/192 (49%)          | 94/207 (45%)          | 155/402 (39%)       | 344/801 (43%)         |
+| Belief mix — generic / socio-moral / socio-theological / theological | 13% / 26% / 30% / 30% | 24% / 25% / 33% / 18% | 6% / 82% / 10% / 3% | 16% / 39% / 27% / 18% |
+
+Only 7.9% of clauses carry any belief tag, and 43% of depositions contain none
+at all — the findings below describe patterns within that thin, unevenly-distributed signal, not a corpus saturated with belief-talk. See `ct_nt_descriptives.xlsx` for the full per-variable breakdown and `belief_treemap_islands_named.pdf` for the per-deposition view.
 
 ## Key Research Findings
 
-**Thematic saturation.** Material-support and spatio-temporal content
-both show a strong negative relationship between a deposition's
-topic-share and its clauses' belief probability — but this isn't a
-blanket absence of co-occurrence. Co-occurrence is common overall: 49.5%
-of depositions with any material-support content, and 54.1% of those
-with any spatio-temporal content, also contain belief — both close to or
-above the corpus-wide 57.1% belief-presence rate, and raw clause counts
-of these topics correlate with belief at essentially zero to weakly
-positive (r=0.02, r=0.11). Only material support shows a genuinely
-all-or-nothing pattern, and only at the extreme tail: none of the 19
-depositions (2.4% of the corpus) where it exceeds 30% of clauses contain
-any belief — spatio-temporal content doesn't share this tail effect (20%
-of depositions above the same threshold still contain belief). Belief has
-a rough fixed ceiling per deposition; other content is elastic and
-expands to fill whatever length a deposition has — converting to
-proportions mechanically turns that scaling difference into the reported
-odds ratios (material support: OR = 0.00, log-odds -8.09;
-spatio-temporal: OR = 0.03, log-odds -3.52), which are GLMM slopes
-extrapolated across the full 0–1 proportion range that no actual
-deposition approaches, not literal frequencies of joint occurrence. See
-"Known post-submission corrections" below for how this finding was
-refined after submission (a coarser, passage-level persistence effect
-coexists with the saturation mechanism).
+**Thematic saturation.** A "detective work", the topics of material-support and spatio-temporal content both show a strong negative relationship between a deposition's topic-share and its clauses' belief probability, but this is not a blanket absence of co-occurrence — most depositions with either topic also contain belief, and only material support (not spatio-temporal) shows a genuine all-or-nothing pattern at the extreme tail (>30% of clauses). Belief has a rough fixed ceiling per deposition while other content is elastic and expands with length, and converting to
+proportions turns that scaling difference into the reported odds ratios (material support: OR = 0.00; spatio-temporal: OR = 0.03) rather than reflecting a literal joint-occurrence frequency. See "Known post-submission corrections" below for how this finding was further refined (a coarser, passage-level persistence effect coexists with saturation).
 
 ![Belief vs. suppressor-topic content, length-corrected](fig4_emm_diverging_bars.png)
 
-**Grammar of belief.** Generic subjects (God, Church, souls) massively
-predict belief-acting: deponent statements with a generic subject carry
+**Grammar of belief.** As one would expect, generic subjects (God, Church, souls) massively
+predict belief-occurence: deponent statements with a generic subject carry
 OR = 16.04 (1504% increase); for theological content specifically,
-OR = 48.42 (4742% increase). "God created souls" counts as belief-acting;
-"I saw the priest" does not — the distinction tracks grammatical subject
-type, not topic alone.
+OR = 48.42 (4742% increase). 
 
-![Model 3 (Procedural Dynamics) fixed-effects coefficients, including the generic-subject agency effect](figures/has_belief_procedural-dynamics_coefs_20260129_121753.png)
-
-**Register specialization.** Bologna LS (Liber Securitatum) shows a
-distinct content profile relative to Toulouse: socio-moral beliefs
-OR = 6.88 (688% increase), theological beliefs OR = 0.25 (75% decrease) —
-consistent with a campaign focused on moral policing rather than
+**Register specialization.** Bologna LS (Liber Securitatum) shows a distinct content profile relative to Toulouse: socio-moral beliefs OR = 6.88 (688% increase), theological beliefs OR = 0.25 (75% decrease) — consistent with a campaign focused on moral policing rather than
 doctrinal investigation.
 
 ![Content-topic profile by register × sex, length-standardized to 35-clause depositions](fig1_emm_popular_thematic_heatmap.png)
@@ -119,11 +77,12 @@ socio-theological belief is a "pump" (low intrinsic momentum, β=0.88;
 high inquisitorial leverage, β=0.72, 45% contribution); socio-moral
 belief is a "channeled stream" (balanced, β=0.87 intrinsic / β=0.60
 induced, 41% contribution). This subtype-level pattern strengthens under
-post-submission correction (see below); the separate claim that the
+post-submission extension (see below); the separate claim that the
 *aggregate* belief measure is exceptionally clustered does not survive
 the same correction.
 
-![Model 4 (Interactional Momentum) fixed-effects coefficients, including burst/initiator variables](figures/has_belief_burst-has-belief_coefs_20260129_121753.png)
+
+![Model 3 (Procedural Dynamics) fixed-effects coefficients, including the generic-subject agency effect](figures/has_belief_procedural-dynamics_coefs_20260129_121753.png)
 
 ### Corpus at a glance
 
@@ -594,6 +553,46 @@ itself — they're re-analyses of it. Summarized with pointers in
 Analyses were conducted using:
 - **Python** with pymer4 package (interface to R's lme4)
 - **R** with lme4 package for mixed-effects modeling
+
+## Citation
+
+Cite **the paper** if you're referencing this study's findings, argument, or
+methodology. Also cite **the dataset** (separately, in addition to the
+paper) if you're reusing the data itself — for replication, a different
+analysis, or tooling built on top of it. If in doubt, cite both.
+
+### The paper
+
+Hampejs, Tomáš, Robert L.J. Shaw, and David Zbíral. "The Performance of Religious Belief in Medieval Inquisition Records: A Structural Analysis Using LLM Data Extraction and Multilevel Regression." In *Digital Humanities and Religions of the Past*, edited by František Válek. De Gruyter, forthcoming.
+
+```bibtex
+@incollection{hampejs2026belief,
+  author    = {Hampejs, Tom{\'a}{\v s} and Shaw, Robert L.J. and Zb{\'i}ral, David},
+  title     = {The Performance of Religious Belief in Medieval Inquisition Records: A Structural Analysis using {LLM} Data Extraction and Multilevel Regression},
+  booktitle = {Digital Humanities and Religions of the Past},
+  editor    = {V{\'a}lek, Franti{\v s}ek},
+  publisher = {De Gruyter},
+  year      = {2026},
+  note      = {Forthcoming}
+}
+```
+
+### The dataset
+
+Hampejs, Tomáš, Robert L.J. Shaw, and David Zbíral. *belief-acting-annotations:
+Clause-Level Annotations of Belief-Acting in Medieval Inquisition
+Depositions of Toulouse (1273-1282) and Bologna (1291-1310)* [Data set]. DISSINET, 2026. https://github.com/DISSINET/belief-acting-annotations
+
+```bibtex
+@misc{hampejs2026beliefactingannotations,
+  author    = {Hampejs, Tom{\'a}{\v s} and Shaw, Robert L.J. and Zb{\'i}ral, David},
+  title     = {belief-acting-annotations: Clause-Level Annotations of Belief-Acting in Medieval Inquisition Depositions of Toulouse (1273-1282) and Bologna (1291-1310)},
+  year      = {2026},
+  publisher = {DISSINET},
+  url       = {https://github.com/DISSINET/belief-acting-annotations},
+  note      = {Data set}
+}
+```
 
 ## License
 
