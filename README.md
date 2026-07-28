@@ -68,16 +68,29 @@ This dataset examines how religious belief was performed and constructed through
 
 ## Key Research Findings
 
-**Thematic saturation.** Material/social content and belief essentially
-never co-occur in the same deposition (material support: OR = 0.00,
-log-odds -8.09; spatio-temporal: OR = 0.03, log-odds -3.52). Belief has a
-rough fixed ceiling per deposition; other content is elastic and expands
-to fill whatever length a deposition has — converting to proportions
-mechanically turns that scaling difference into a strong negative
-association, without belief and other content actively displacing one
-another clause-by-clause. See "Known post-submission corrections" below
-for how this finding was refined after submission (a coarser,
-passage-level persistence effect coexists with the saturation mechanism).
+**Thematic saturation.** Material-support and spatio-temporal content
+both show a strong negative relationship between a deposition's
+topic-share and its clauses' belief probability — but this isn't a
+blanket absence of co-occurrence. Co-occurrence is common overall: 49.5%
+of depositions with any material-support content, and 54.1% of those
+with any spatio-temporal content, also contain belief — both close to or
+above the corpus-wide 57.1% belief-presence rate, and raw clause counts
+of these topics correlate with belief at essentially zero to weakly
+positive (r=0.02, r=0.11). Only material support shows a genuinely
+all-or-nothing pattern, and only at the extreme tail: none of the 19
+depositions (2.4% of the corpus) where it exceeds 30% of clauses contain
+any belief — spatio-temporal content doesn't share this tail effect (20%
+of depositions above the same threshold still contain belief). Belief has
+a rough fixed ceiling per deposition; other content is elastic and
+expands to fill whatever length a deposition has — converting to
+proportions mechanically turns that scaling difference into the reported
+odds ratios (material support: OR = 0.00, log-odds -8.09;
+spatio-temporal: OR = 0.03, log-odds -3.52), which are GLMM slopes
+extrapolated across the full 0–1 proportion range that no actual
+deposition approaches, not literal frequencies of joint occurrence. See
+"Known post-submission corrections" below for how this finding was
+refined after submission (a coarser, passage-level persistence effect
+coexists with the saturation mechanism).
 
 ![Belief vs. suppressor-topic content, length-corrected](fig4_emm_diverging_bars.png)
 
