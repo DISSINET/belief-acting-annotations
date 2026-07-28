@@ -59,15 +59,15 @@ proportions turns that scaling difference into the reported odds ratios (materia
 
 ![Belief vs. suppressor-topic content, length-corrected](fig4_emm_diverging_bars.png)
 
-**Grammar of belief.** As one would expect, generic subjects (God, Church, souls) massively
-predict belief-occurence: deponent statements with a generic subject carry
-OR = 16.04 (1504% increase); for theological content specifically,
-OR = 48.42 (4742% increase). 
-
 **Register specialization.** Bologna LS (Liber Securitatum) shows a distinct content profile relative to Toulouse: socio-moral beliefs OR = 6.88 (688% increase), theological beliefs OR = 0.25 (75% decrease) — consistent with a campaign focused on moral policing rather than
 doctrinal investigation.
 
 ![Content-topic profile by register × sex, length-standardized to 35-clause depositions](fig1_emm_popular_thematic_heatmap.png)
+
+**Grammar of belief.** As one would expect, generic subjects (God, Church, souls) massively
+predict belief-occurence: deponent statements with a generic subject carry
+OR = 16.04 (1504% increase); for theological content specifically,
+OR = 48.42 (4742% increase). 
 
 **Interactional dynamics.** Belief subtypes show distinct "hydraulic"
 patterns in how inquisitor-initiated vs. deponent-initiated discourse
@@ -100,6 +100,16 @@ same 801 glyphs are also included:
 (same size-tier grouping as the default, but depositions from the same
 person are clustered together with a light-gray backdrop).
 
+Each of these three has an experimental `_nagsplit` variant
+([default](belief_treemap_islands_named_nagsplit.pdf),
+[by ID](belief_treemap_islands_named_by_id_nagsplit.pdf),
+[by person](belief_treemap_islands_named_by_person_nagsplit.pdf)) that
+splits every glyph left/right: the left two-thirds is the same topic stack
+as above, the right third shows that *same topic's own* narrative-agency
+mix in that deposition — black = inquisitor discourse, gray = notary,
+white = deponent — computed per topic, not one blanket ratio for the
+whole deposition.
+
 ## Repository Structure
 
 ### Data Files
@@ -128,6 +138,7 @@ person are clustered together with a light-gray backdrop).
 - **`supplementary_analyses/length_adjustment/`**: GLM length-adjustment methodology, plus the three-panel comparison (predictions / EMM / compact letter display, HC3-robust) and its backing data — same format as `supplementary_analyses/replication_data/`'s equivalent, for direct canonical-vs-replication comparison. See `supplementary_analyses/length_adjustment/README.md`.
 - **Descriptive figures (repo root)**: `fig1_emm_popular_thematic_heatmap.png`, `fig2_emm_popular_discursive_budget.png`, `fig3_emm_belief_composition.png`, `fig4_emm_diverging_bars.png`, `fig5_emm_sex_slopes.png`, `fig6_emm_forest.png` — length-corrected (GLM-adjusted Estimated Marginal Means) descriptive figures. `fig_model2_saturation_coefs.png` visualizes Model 2's fitted coefficients (see "Known post-submission corrections" below for the saturation mechanism). `supplementary_analyses/descriptives_methodology_comparison/` shows the same data under raw and inverse-length-weighted normalization alongside the EMM figures, demonstrating why length-correction matters for this corpus — see `descriptive.figures.readme.md` for the full three-method comparison.
 - **`belief_treemap_islands_named.pdf`**: Vector treemap of all 801 depositions, one glyph per deposition (circle = female deponent, square = male), grouped into three register "islands" and sized by deposition length; each glyph is a stacked bar of that deposition's own topic composition. Deponent name and deposition code are real, searchable/selectable text in every glyph, not rasterized labels. `belief_treemap_islands_named_by_id.pdf` and `belief_treemap_islands_named_by_person.pdf` are alternate orderings of the same 801 glyphs (flat deposition-ID sequence; same-person depositions clustered together), same searchable-text property.
+- **`belief_treemap_islands_named_nagsplit.pdf`** / **`_by_id_nagsplit.pdf`** / **`_by_person_nagsplit.pdf`**: Experimental variants of the three files above — each glyph splits left (topic stack, 2/3 width) / right (that same topic's own narrative-agency mix in that deposition: black = inquisitor, gray = notary, white = deponent, 1/3 width). Same searchable name/ID text, kept legible over the black bars with a thin white per-letter halo (plain duplicate text glyphs, not a stroke effect — see git history for why a stroke effect breaks PDF text search).
 - **`supplementary_analyses/replication_data/`**: Summary tables backing the full-corpus replication (see "Validation" above and `REPLICATION.md`).
 - **`supplementary_analyses/burst_saturation/`**: Code and write-ups backing the Model 4 aggregate-vs-subtype correction and the suppression→saturation reframing (see "Known post-submission corrections" below and `POST_SUBMISSION_CORRECTIONS.md` #1/#3).
 
